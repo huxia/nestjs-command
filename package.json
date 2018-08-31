@@ -20,6 +20,7 @@
     "@types/node": "^10.3.5",
     "@types/yargs": "^11.1.1",
     "fastify-swagger": "^0.15.0",
+    "prettier": "^1.14.2",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "typescript": "^2.6.2"
