@@ -31,7 +31,7 @@ const createCommandParamDecorator = <O>(paramtype: CommandParamTypes) => {
 };
 
 export interface CommandMetadata {
-  params: CommandParamMetadata<PositionalOptions| Options>;
+  params: CommandParamMetadata<CommnadPositionalOption| CommandOptionsOption>;
   option: CommandOption;
 }
 export interface CommandOption {
