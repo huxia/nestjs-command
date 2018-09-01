@@ -14,12 +14,14 @@ import {
   CommnadPositionalOption,
   CommandParamMetadataItem,
 } from './command.decorator';
+import { CommandService } from './command.service';
 
 @Injectable()
 export class CommandExplorerService {
   constructor(
     private readonly modulesContainer: ModulesContainer,
     private readonly metadataScanner: MetadataScanner,
+    private readonly commandService: CommandService,
   ) { }
 
   explore(): CommandModule[] {
@@ -78,6 +80,8 @@ export class CommandExplorerService {
         }; // EOF builder
 
         const handler = async (argv: any) => {
+          this.commandService.run();
+
           const params = [];
           this.applyParamMetadata(
             command.metadata.params,
@@ -100,7 +104,9 @@ export class CommandExplorerService {
             },
           );
 
-          await exec(...params);
+          const code = await exec(...params);
+
+          this.commandService.exit(code || 0);
         };
 
         return {
