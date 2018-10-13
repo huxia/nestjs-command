@@ -1,6 +1,6 @@
 {
   "name": "nestjs-command",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "nest.js command tool",
   "main": "index.js",
   "author": "zhong666<aa900031@gmail.com>",
