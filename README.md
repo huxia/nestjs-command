@@ -99,9 +99,29 @@ export class UserCommand {
 
 ```
 
+Register UserCommand class as provider in base module: `/src/app.module.ts`
+
+```typescript
+import { Module } from '@nestjs/common';
+import { CommandModule } from 'nestjs-command';
+import { UserCommand } from "./user/user.command";
+
+@Module({
+  imports: [
+    CommandModule,
+  ],
+  providers: [
+    UserCommand
+  ]
+})
+export class AppModule {}
+
+```
+
+
 Run cli in terminal
 
 ```bash
-bin/cli
+bin/cli create:user my-first-user
 ```
 
