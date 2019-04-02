@@ -7,7 +7,10 @@
 ## Installation
 
 ```bash
-$ npm install
+$ npm install --save nestjs-command
+
+# if use typescript
+$ npm install --save-dev @types/yargs
 ```
 
 ## Quick Start
