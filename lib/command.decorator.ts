@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { ReflectMetadata } from '@nestjs/common';
+import { SetMetadata } from '@nestjs/common';
 import { PositionalOptions, Options } from 'yargs';
 
 export const COMMAND_HANDLER_METADATA = '__command-handler-metadata__';
@@ -46,7 +46,7 @@ export function Command(option: CommandOption): MethodDecorator {
       option,
     };
 
-    ReflectMetadata(
+    SetMetadata(
       COMMAND_HANDLER_METADATA, metadata,
     )(
       target, key, descriptor,

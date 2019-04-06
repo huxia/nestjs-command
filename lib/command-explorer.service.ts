@@ -1,4 +1,4 @@
-import { flattenDeep, forEach } from 'lodash';
+import { flattenDeep, forEach, compact } from 'lodash';
 import { CommandModule, Argv } from 'yargs';
 import { Injectable } from '@nestjs/common';
 import { MetadataScanner } from '@nestjs/core/metadata-scanner';
@@ -28,15 +28,17 @@ export class CommandExplorerService {
       ...this.modulesContainer.values(),
     ].map(module => module.components);
 
-    return flattenDeep<CommandModule>(
+    return compact(flattenDeep<CommandModule>(
       components.map(component =>
         [...component.values()]
           .map(({ instance, metatype }) => this.filterCommands(instance, metatype)),
       ),
-    );
+    ));
   }
 
   protected filterCommands(instance: InjectableInterface, metatype: any) {
+    if (!instance) return;
+
     const prototype = Object.getPrototypeOf(instance);
     const components = this.metadataScanner.scanFromPrototype(
       instance,

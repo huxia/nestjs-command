@@ -4,6 +4,10 @@
 
 [Nest.js](https://github.com/nestjs/nest) Command tools, base on [yargs](https://github.com/yargs/yargs)
 
+## Dependency
+- Use version `1.*` for nestjs `6.*`
+- Use version `0.*` for nestjs `5.*`
+
 ## Installation
 
 ```bash
