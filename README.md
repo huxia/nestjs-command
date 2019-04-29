@@ -49,32 +49,12 @@ import { QuietLogger } from './core/services/quiet-logger.service'; // Custom Lo
 
 ```
 
-Create cli file: `/bin/cli`
+~~Create cli file: `/bin/cli`~~
 
-```js
-#!/usr/bin/env node
+Use `nestjs-command` to exec command (instead `/bin/cli`)
 
-(function () {
-  const path = require('path');
-  const PATH_PROD_CODE_DIR = '../dist';
-  const PATH_DEV_CODE_DIR = '../src';
-  const PATH_BOOTSTRAP_CLI_FILE = './cli';
-
-  switch (process.env.NODE_ENV) {
-    case 'production':
-    case 'prod':
-      require(path.resolve(__dirname, PATH_PROD_CODE_DIR, PATH_BOOTSTRAP_CLI_FILE + '.js'));
-      break;
-
-    case 'develope':
-    case 'dev':
-    default:
-      require('ts-node').register();
-      require(path.resolve(__dirname, PATH_DEV_CODE_DIR, PATH_BOOTSTRAP_CLI_FILE + '.ts'));
-      break;
-  }
-})();
-```
+- `npx nestjs-command`: run by default `/src/cli.ts`
+- `CLI_PATH=./dist/cli.js npx nestjs-command`: run `/dist/cli.js` by env `CLI_PATH`
 
 # Usage
 
@@ -129,6 +109,6 @@ export class AppModule {}
 Run cli in terminal
 
 ```bash
-bin/cli create:user my-first-user
+npx nestjs-command create:user my-first-user
 ```
 
