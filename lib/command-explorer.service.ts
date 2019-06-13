@@ -62,7 +62,7 @@ export class CommandExplorerService {
 
           this.commandService.run();
           const code = await exec(...params);
-          this.commandService.exit(code || 0);
+          command.metadata.option.autoExit && this.commandService.exit(code || 0);
         };
 
         return {
