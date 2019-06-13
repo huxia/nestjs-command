@@ -71,6 +71,7 @@ export class UserCommand {
     private readonly userService: UserService,
   ) { }
 
+  // you can use `autoExit: false` if you need to control the exit of the command
   @Command({ command: 'create:user <account>', describe: 'create a user' })
   async create(
     @Positional({
