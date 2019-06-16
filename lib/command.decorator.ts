@@ -42,6 +42,10 @@ export interface CommandOption {
 }
 export function Command(option: CommandOption): MethodDecorator {
   return (target: object, key: string | symbol, descriptor: PropertyDescriptor) => {
+    if (option && typeof option.autoExit !== 'boolean') {
+      option.autoExit = true;
+    }
+
     const metadata: CommandMetadata = {
       params: Reflect.getMetadata(COMMAND_ARGS_METADATA, descriptor.value),
       option,
