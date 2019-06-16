@@ -38,6 +38,7 @@ export interface CommandOption {
   aliases?: string[] | string;
   command: string[] | string;
   describe?: string | false;
+  autoExit?: boolean;
 }
 export function Command(option: CommandOption): MethodDecorator {
   return (target: object, key: string | symbol, descriptor: PropertyDescriptor) => {
