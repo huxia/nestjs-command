@@ -1,4 +1,5 @@
-import { flattenDeep, forEach, compact } from 'lodash';
+import compact from 'lodash.compact';
+import flattenDeep from 'lodash.flattendeep';
 import { CommandModule, Argv } from 'yargs';
 import { Injectable } from '@nestjs/common';
 import { MetadataScanner } from '@nestjs/core/metadata-scanner';
@@ -86,8 +87,17 @@ export class CommandExplorerService {
     params: CommandParamMetadata<O>,
     callback: (item: CommandParamMetadataItem<O>, key: string) => void,
   ) {
-    forEach(params, (param, key) => {
-      forEach(param, (metadata) => callback(metadata, key));
+    if (!params) {
+      return;
+    }
+
+    Object.keys(params).forEach((key) => {
+      const param: CommandParamMetadataItem<O>[] = params[key];
+      if (!param || !Array.isArray(param)) {
+        return;
+      }
+
+      param.forEach((metadata) => callback(metadata, key));
     });
   }
 
