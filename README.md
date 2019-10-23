@@ -1,5 +1,8 @@
 # Nestjs Command
 
+![npm](https://img.shields.io/npm/v/nestjs-command)
+![npm](https://img.shields.io/npm/dw/nestjs-command)
+
 ## Description
 
 [Nest.js](https://github.com/nestjs/nest) Command tools, base on [yargs](https://github.com/yargs/yargs)
@@ -39,11 +42,12 @@ Create a Init File: `/src/cli.ts`
 ```ts
 import { NestFactory } from '@nestjs/core';
 import { CommandModule, CommandService } from 'nestjs-command';
-import { CoreModule } from './core/core.module'; // Base module
-import { QuietLogger } from './core/services/quiet-logger.service'; // Custom Logger
+import { CoreModule } from './core/core.module';
 
 (async () => {
-  const app = await NestFactory.createApplicationContext(CoreModule);
+  const app = await NestFactory.createApplicationContext(CoreModule, {
+    logger: false // no logger
+  });
   app.select(CommandModule).get(CommandService).exec();
 })();
 
