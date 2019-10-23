@@ -2,8 +2,12 @@
   "name": "nestjs-command",
   "version": "1.2.0",
   "description": "nest.js command tool",
-  "main": "index.js",
-  "author": "zhong666<aa900031@gmail.com>",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": {
+    "name": "zhong666",
+    "email": "aa900031@gmail.com"
+  },
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc",
