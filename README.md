@@ -117,3 +117,26 @@ Run cli in terminal
 npx nestjs-command create:user my-first-user
 ```
 
+
+How to test it?
+
+```typescript
+import { Test } from '@nestjs/testing';
+import { CommandModule, CommandModuleTest } from 'nestjs-command';
+import { AppModule } from './app.module';
+
+async function test(): Promise<void> {
+    const moduleFixture = await Test.createTestingModule({imports: [AppModule]}).compile();
+    
+    const app = moduleFixture.createNestApplication();
+    await app.init();
+    
+    const commandModule = new CommandModuleTest(app.select(CommandModule));
+
+    const command = 'create:user <account>';
+    const args = {account: 'Foo'};
+    const exitCode = 0; 
+  
+    await commandModule.execute(command, args, exitCode);
+}
+```

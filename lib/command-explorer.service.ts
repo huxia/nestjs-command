@@ -12,7 +12,7 @@ import {
   CommandParamMetadata,
   CommandOptionsOption,
   CommnadPositionalOption,
-  CommandParamMetadataItem,
+  CommandParamMetadataItem
 } from './command.decorator';
 import { CommandService } from './command.service';
 
@@ -21,20 +21,23 @@ export class CommandExplorerService {
   constructor(
     private readonly modulesContainer: ModulesContainer,
     private readonly metadataScanner: MetadataScanner,
-    private readonly commandService: CommandService,
-  ) { }
+    private readonly commandService: CommandService
+  ) {}
 
   explore(): CommandModule[] {
-    const components = [
-      ...this.modulesContainer.values(),
-    ].map(module => module.components);
+    const components = [...this.modulesContainer.values()].map(
+      module => module.components
+    );
 
-    return compact(flattenDeep<CommandModule>(
-      components.map(component =>
-        [...component.values()]
-          .map(({ instance, metatype }) => this.filterCommands(instance, metatype)),
-      ),
-    ));
+    return compact(
+      flattenDeep<CommandModule>(
+        components.map(component =>
+          [...component.values()].map(({ instance, metatype }) =>
+            this.filterCommands(instance, metatype)
+          )
+        )
+      )
+    );
   }
 
   protected filterCommands(instance: InjectableInterface, metatype: any) {
@@ -44,7 +47,7 @@ export class CommandExplorerService {
     const components = this.metadataScanner.scanFromPrototype(
       instance,
       prototype,
-      name => this.extractMetadata(instance, prototype, name),
+      name => this.extractMetadata(instance, prototype, name)
     );
 
     return components
@@ -63,47 +66,54 @@ export class CommandExplorerService {
 
           this.commandService.run();
           const code = await exec(...params);
-          command.metadata.option.autoExit && this.commandService.exit(code || 0);
+          command.metadata.option.autoExit &&
+            this.commandService.exit(code || 0);
         };
 
         return {
           ...command.metadata.option,
           builder,
-          handler,
+          handler
         };
       });
   }
 
   protected extractMetadata(instance, prototype, methodName: string) {
     const callback = prototype[methodName];
-    const metadata: CommandMetadata = Reflect.getMetadata(COMMAND_HANDLER_METADATA, callback);
+    const metadata: CommandMetadata = Reflect.getMetadata(
+      COMMAND_HANDLER_METADATA,
+      callback
+    );
 
     return {
-      methodName, metadata,
+      methodName,
+      metadata
     };
   }
 
   protected iteratorParamMetadata<O>(
     params: CommandParamMetadata<O>,
-    callback: (item: CommandParamMetadataItem<O>, key: string) => void,
+    callback: (item: CommandParamMetadataItem<O>, key: string) => void
   ) {
     if (!params) {
       return;
     }
 
-    Object.keys(params).forEach((key) => {
+    Object.keys(params).forEach(key => {
       const param: CommandParamMetadataItem<O>[] = params[key];
       if (!param || !Array.isArray(param)) {
         return;
       }
 
-      param.forEach((metadata) => callback(metadata, key));
+      param.forEach(metadata => callback(metadata, key));
     });
   }
 
   private generateCommandHandlerParams(
-    params: CommandParamMetadata<CommandOptionsOption | CommnadPositionalOption>,
-    argv: any,
+    params: CommandParamMetadata<
+      CommandOptionsOption | CommnadPositionalOption
+    >,
+    argv: any
   ) {
     const list = [];
 
@@ -114,7 +124,8 @@ export class CommandExplorerService {
           break;
 
         case CommandParamTypes.POSITIONAL:
-          list[item.index] = argv[(item.option as CommnadPositionalOption).name];
+          list[item.index] =
+            argv[(item.option as CommnadPositionalOption).name];
           break;
 
         case CommandParamTypes.ARGV:
@@ -129,7 +140,9 @@ export class CommandExplorerService {
   }
 
   private generateCommandBuilder(
-    params: CommandParamMetadata<CommandOptionsOption | CommnadPositionalOption>,
+    params: CommandParamMetadata<
+      CommandOptionsOption | CommnadPositionalOption
+    >,
     yargs: Argv
   ) {
     this.iteratorParamMetadata(params, (item, key) => {
@@ -137,14 +150,14 @@ export class CommandExplorerService {
         case CommandParamTypes.OPTION:
           yargs.option(
             (item.option as CommandOptionsOption).name,
-            (item.option as CommandOptionsOption),
+            item.option as CommandOptionsOption
           );
           break;
 
         case CommandParamTypes.POSITIONAL:
           yargs.positional(
             (item.option as CommnadPositionalOption).name,
-            (item.option as CommnadPositionalOption),
+            item.option as CommnadPositionalOption
           );
           break;
 

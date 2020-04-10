@@ -3,9 +3,7 @@ import { CommandService } from './command.service';
 
 @Injectable()
 export class CommandLogService {
-  constructor(
-    private readonly commandService: CommandService,
-  ) {}
+  constructor(private readonly commandService: CommandService) {}
 
   log(message: string) {
     if (!this.isRunning) return;

@@ -7,11 +7,11 @@ export const COMMAND_ARGS_METADATA = '__command-args-metadata__';
 export enum CommandParamTypes {
   POSITIONAL = 'POSITIONAL',
   OPTION = 'OPTION',
-  ARGV = 'ARGV',
+  ARGV = 'ARGV'
 }
 
 export type CommandParamMetadata<O> = {
-  [type in CommandParamTypes]: CommandParamMetadataItem<O>[];
+  [type in CommandParamTypes]: CommandParamMetadataItem<O>[]
 };
 export interface CommandParamMetadataItem<O> {
   index: number;
@@ -19,19 +19,21 @@ export interface CommandParamMetadataItem<O> {
 }
 const createCommandParamDecorator = <O>(paramtype: CommandParamTypes) => {
   return (option?: O): ParameterDecorator => (target, key, index) => {
-    const params = Reflect.getMetadata(COMMAND_ARGS_METADATA, target[key]) || {};
-    Reflect.defineMetadata(COMMAND_ARGS_METADATA, {
-      ...params,
-      [paramtype]: [
-        ...params[paramtype] || [],
-        { index, option },
-      ],
-    }, target[key]);
+    const params =
+      Reflect.getMetadata(COMMAND_ARGS_METADATA, target[key]) || {};
+    Reflect.defineMetadata(
+      COMMAND_ARGS_METADATA,
+      {
+        ...params,
+        [paramtype]: [...(params[paramtype] || []), { index, option }]
+      },
+      target[key]
+    );
   };
 };
 
 export interface CommandMetadata {
-  params: CommandParamMetadata<CommnadPositionalOption| CommandOptionsOption>;
+  params: CommandParamMetadata<CommnadPositionalOption | CommandOptionsOption>;
   option: CommandOption;
 }
 export interface CommandOption {
@@ -41,37 +43,35 @@ export interface CommandOption {
   autoExit?: boolean;
 }
 export function Command(option: CommandOption): MethodDecorator {
-  return (target: object, key: string | symbol, descriptor: PropertyDescriptor) => {
+  return (
+    target: object,
+    key: string | symbol,
+    descriptor: PropertyDescriptor
+  ) => {
     if (option && typeof option.autoExit !== 'boolean') {
       option.autoExit = true;
     }
 
     const metadata: CommandMetadata = {
       params: Reflect.getMetadata(COMMAND_ARGS_METADATA, descriptor.value),
-      option,
+      option
     };
 
-    SetMetadata(
-      COMMAND_HANDLER_METADATA, metadata,
-    )(
-      target, key, descriptor,
-    );
+    SetMetadata(COMMAND_HANDLER_METADATA, metadata)(target, key, descriptor);
   };
 }
 export interface CommnadPositionalOption extends PositionalOptions {
   name: string;
 }
 export const Positional = createCommandParamDecorator<CommnadPositionalOption>(
-  CommandParamTypes.POSITIONAL,
+  CommandParamTypes.POSITIONAL
 );
 
 export interface CommandOptionsOption extends Options {
   name: string;
 }
 export const Option = createCommandParamDecorator<CommandOptionsOption>(
-  CommandParamTypes.OPTION,
+  CommandParamTypes.OPTION
 );
 
-export const Argv = createCommandParamDecorator(
-  CommandParamTypes.ARGV,
-);
+export const Argv = createCommandParamDecorator(CommandParamTypes.ARGV);
