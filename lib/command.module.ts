@@ -4,16 +4,12 @@ import { CommandService } from './command.service';
 import { CommandExplorerService } from './command-explorer.service';
 
 @Module({
-  providers: [
-    CommandService,
-    CommandExplorerService,
-    MetadataScanner,
-  ],
+  providers: [CommandService, CommandExplorerService, MetadataScanner]
 })
 export class CommandModule implements OnModuleInit {
   constructor(
     private readonly cliService: CommandService,
-    private readonly commandExplorerService: CommandExplorerService,
+    private readonly commandExplorerService: CommandExplorerService
   ) {}
 
   onModuleInit() {

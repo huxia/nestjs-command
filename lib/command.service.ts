@@ -15,7 +15,8 @@ export class CommandService {
 
   exec() {
     this.yargs.demandCommand(1);
-    this.yargs.help('h')
+    this.yargs
+      .help('h')
       .alias('h', 'help')
       .alias('v', 'version');
     this.yargs.argv;
