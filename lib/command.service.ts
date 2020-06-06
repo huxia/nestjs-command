@@ -7,21 +7,24 @@ export class CommandService {
   private running: boolean = false;
 
   initialize(metadatas: CommandModule[]) {
-    this.yargs
+    const { yargs } = this
+
+    yargs
       .scriptName('cli')
+      .demandCommand(1)
+      .help('h')
+      .alias('h', 'help')
+      .alias('v', 'version')
       .strict();
+
     metadatas.forEach(command => {
-      this.yargs.command(command);
+      yargs.command(command);
     });
   }
 
   exec() {
-    this.yargs.demandCommand(1);
-    this.yargs
-      .help('h')
-      .alias('h', 'help')
-      .alias('v', 'version');
-    this.yargs.argv;
+    const { yargs } = this
+    yargs.argv;
   }
 
   run() {
