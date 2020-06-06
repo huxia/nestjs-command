@@ -7,7 +7,9 @@ export class CommandService {
   private running: boolean = false;
 
   initialize(metadatas: CommandModule[]) {
-    this.yargs.scriptName('cli');
+    this.yargs
+      .scriptName('cli')
+      .strict();
     metadatas.forEach(command => {
       this.yargs.command(command);
     });
