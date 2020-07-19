@@ -16,12 +16,12 @@ install_dependencies:
 
 publish_package:
   stage: deploy
-  only:
-    - tags
-    - triggers
+  # only:
+  #   - tags
+  #   - triggers
   before_script:
     - npm config set registry https://registry.npmjs.org/
-    - npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+    - npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
   script:
     - yarn build
     - npm publish --access public
