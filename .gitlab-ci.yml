@@ -19,10 +19,9 @@ publish_package:
   only:
     - tags
     - triggers
-  before_script:
-    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
   script:
     - yarn build
+    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
     - npm publish
   artifacts:
     paths:
