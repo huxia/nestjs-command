@@ -11,8 +11,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "format": "prettier lib/**/*.ts --write",
-    "prepublish": "npm run build"
+    "format": "prettier lib/**/*.ts --write"
   },
   "dependencies": {
     "lodash.compact": "^3.0.1",

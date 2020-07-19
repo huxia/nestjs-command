@@ -1,0 +1,38 @@
+stages:
+  - build
+  - deploy
+
+# Jobs
+install_dependency:
+  image: node:10-alpine
+  stage: build
+  script:
+    - npm install
+  cache:
+    paths:
+      - ./node_modules
+
+create_npmrc:
+  stage: build
+  script:
+    - |
+      if [[ ! -f .npmrc ]]; then
+        {
+          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'
+        } >> .npmrc
+      fi
+
+build_dist:
+  image: node:10-alpine
+  stage: build
+  script:
+    - npm build
+  artifacts:
+    paths:
+      - ./dist
+
+publish_package:
+  image: node:10-alpine
+  stage: deploy
+  script:
+    - npm publish
