@@ -20,6 +20,7 @@ publish_package:
     - tags
     - triggers
   before_script:
+    - npm config set registry https://registry.npmjs.org/
     - npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
   script:
     - yarn build
