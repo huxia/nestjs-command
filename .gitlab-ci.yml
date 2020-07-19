@@ -12,7 +12,7 @@ cache:
 install_dependencies:
   stage: build
   script:
-    - npm install
+    - yarn install
 
 publish_package:
   stage: deploy
@@ -22,7 +22,7 @@ publish_package:
   before_script:
     - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
   script:
-    - npm run build
+    - yarn build
     - npm publish
   artifacts:
     paths:
