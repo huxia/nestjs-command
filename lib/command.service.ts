@@ -1,6 +1,7 @@
 import { Argv, CommandModule } from 'yargs';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Global } from '@nestjs/common';
 
+@Global()
 @Injectable()
 export class CommandService {
   private _yargs?: Argv;

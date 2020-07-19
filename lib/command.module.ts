@@ -4,7 +4,8 @@ import { CommandService } from './command.service';
 import { CommandExplorerService } from './command-explorer.service';
 
 @Module({
-  providers: [CommandService, CommandExplorerService, MetadataScanner]
+  providers: [CommandService, CommandExplorerService, MetadataScanner],
+  exports: [CommandService],
 })
 export class CommandModule implements OnModuleInit {
   constructor(
