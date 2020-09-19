@@ -11,14 +11,17 @@ cache:
 # Jobs
 install_dependencies:
   stage: build
+  only:
+    - tags
+    - master
   script:
     - yarn install
 
 publish_package:
   stage: deploy
-  # only:
-  #   - tags
-  #   - triggers
+  only:
+    - tags
+    - master
   before_script:
     - npm config set registry https://registry.npmjs.org/
     - npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
