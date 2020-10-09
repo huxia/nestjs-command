@@ -30,9 +30,7 @@ import { Module } from '@nestjs/common';
 import { CommandModule } from 'nestjs-command';
 
 @Module({
-  imports: [
-    CommandModule,
-  ],
+  imports: [CommandModule]
 })
 export class AppModule {}
 ```
@@ -48,7 +46,10 @@ import { CoreModule } from './core/core.module';
   const app = await NestFactory.createApplicationContext(CoreModule, {
     logger: false // no logger
   });
-  app.select(CommandModule).get(CommandService).exec();
+  app
+    .select(CommandModule)
+    .get(CommandService)
+    .exec();
 })();
 ```
 
@@ -58,8 +59,6 @@ Run your program in either ways:
 
 - `npx nestjs-command`: run by default `./src/cli.ts`
 - `CLI_PATH=./dist/cli.js npx nestjs-command`: run `/dist/cli.js` with the `CLI_PATH` env
-- `node ./src/api.js` if you use plain javascript
-- `ts-node ./src/api.ts` if you use typescript
 
 ## Usage example
 
@@ -74,11 +73,9 @@ import { UserService } from './user.service';
 
 @Injectable()
 export class UserCommand {
-  constructor(
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
-  @Command({ 
+  @Command({
     command: 'create:user <username>',
     describe: 'create a user',
     autoExit: true // defaults to `true`, but you can use `false` if you need more control
@@ -87,32 +84,30 @@ export class UserCommand {
     @Positional({
       name: 'username',
       describe: 'the username',
-      type: 'string',
+      type: 'string'
     })
     username: string,
-
     @Option({
       name: 'group',
       describe: 'user group (ex: "jedi")',
       type: 'string',
       alias: 'g',
-      required: false,
+      required: false
     })
     group: string,
-
     @Option({
       name: 'saber',
       describe: 'if user has a lightsaber',
       type: 'boolean',
       default: false,
-      required: false,
+      required: false
     })
-    saber: boolean,
+    saber: boolean
   ) {
     this.userService.add({
       username,
       group,
-      saber,
+      saber
     });
   }
 }
@@ -121,34 +116,29 @@ export class UserCommand {
 Create a simple Service File: `./src/user/user.service.ts`
 
 ```typescript
-import { Injectable } from "@nestjs/common";
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UserService {
   async add(user: any): Promise<any> {
     return Promise.resolve().then(() => {
-      console.log("user added:", user);
-    })
+      console.log('user added:', user);
+    });
   }
 }
 ```
 
-Register this *UserCommand* and *UserService" as providers in your base module: `./src/app.module.ts`
+Register this _UserCommand_ and _UserService_ as providers in your base module: `./src/app.module.ts`
 
 ```typescript
 import { Module } from '@nestjs/common';
 import { CommandModule } from 'nestjs-command';
-import { UserCommand } from "./user/user.command";
+import { UserCommand } from './user/user.command';
 import { UserService } from './user/user.service';
 
 @Module({
-  imports: [
-    CommandModule,
-  ],
-  providers: [
-    UserCommand,
-    UserService,
-  ]
+  imports: [CommandModule],
+  providers: [UserCommand, UserService]
 })
 export class AppModule {}
 ```
@@ -168,16 +158,16 @@ async function bootstrap() {
     .select(CommandModule)
     .get(CommandService)
     .exec();
-  }
-  bootstrap();
+}
+bootstrap();
 ```
 
 ### Run your program in a terminal
 
-__Get some help__:
+**Get some help**:
 
 ```bash
-$ ts-node ./src/cli.ts create:user --help
+$ npx nestjs-command create:user --help
 cli create:user <username>
 
 create a user
@@ -192,13 +182,13 @@ Options:
   -v, --version  Show version number                                   [boolean]
 ```
 
-__Add a new user__:
+**Add a new user**:
 
 ```bash
-$ ts-node ./src/cli.ts create:user anakin --group jedi --no-saber
+$ npx nestjs-command create:user anakin --group jedi --no-saber
 user added: { username: 'anakin', group: 'jedi', saber: false }
 
-$ ts-node ./src/cli.ts create:user yoda --group jedi --saber
+$ npx nestjs-command create:user yoda --group jedi --saber
 user added: { username: 'yoda', group: 'jedi', saber: true }
 ```
 
@@ -214,7 +204,7 @@ describe('AppModule', () => {
 
   beforeEach(async () => {
     const moduleFixture = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [AppModule]
     }).compile();
 
     const app = moduleFixture.createNestApplication();
