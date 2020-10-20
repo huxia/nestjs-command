@@ -25,7 +25,7 @@ publish_package:
     - npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
   script:
     - yarn build
-    - npm publish --access public
+    - npm publish --verbose
   artifacts:
     paths:
       - dist/
