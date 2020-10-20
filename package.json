@@ -34,8 +34,8 @@
     "typescript": "^3.9.5"
   },
   "peerDependencies": {
-    "@nestjs/common": "^6.0.0",
-    "@nestjs/core": "^6.0.0"
+    "@nestjs/common": "^6.0.0 || ^7.0.0",
+    "@nestjs/core": "^6.0.0 || ^7.0.0"
   },
   "repository": {
     "type": "git",
