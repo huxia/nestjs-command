@@ -1,6 +1,6 @@
 {
   "name": "nestjs-command",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "nest.js command tool",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
