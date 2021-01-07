@@ -1,7 +1,8 @@
 # Nestjs Command
 
-![npm](https://img.shields.io/npm/v/nestjs-command)
-![npm](https://img.shields.io/npm/dw/nestjs-command)
+![npm version](https://img.shields.io/npm/v/nestjs-command)
+![npm download by week](https://img.shields.io/npm/dw/nestjs-command)
+![npm peer dependency version - @nestjs/core](https://img.shields.io/npm/dependency-version/nestjs-console/peer/@nestjs/core)
 
 ## Description
 
@@ -9,7 +10,7 @@
 
 ## Dependency
 
-- Use version `1.*` for nestjs `6.*`
+- Use version `1.*` for nestjs `6.*`, `7.*`
 - Use version `0.*` for nestjs `5.*`
 
 ## Installation
