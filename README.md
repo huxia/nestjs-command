@@ -1,8 +1,8 @@
 # Nestjs Command
 
-![npm version](https://img.shields.io/npm/v/nestjs-command)
-![npm download by week](https://img.shields.io/npm/dw/nestjs-command)
-![npm peer dependency version - @nestjs/core](https://img.shields.io/npm/dependency-version/nestjs-console/peer/@nestjs/core)
+[![npm version](https://img.shields.io/npm/v/nestjs-command)](https://www.npmjs.com/package/nestjs-command)
+[![npm download by month](https://img.shields.io/npm/dm/nestjs-command)](https://npmcharts.com/compare/nestjs-command?minimal=true)
+[![npm peer dependency version - @nestjs/core](https://img.shields.io/npm/dependency-version/nestjs-console/peer/@nestjs/core)](https://github.com/nestjs/nest)
 
 ## Description
 
