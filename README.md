@@ -40,11 +40,11 @@ Create a Cli entrypoint: `./src/cli.ts`
 ```typescript
 import { NestFactory } from '@nestjs/core';
 import { CommandModule, CommandService } from 'nestjs-command';
-import { CoreModule } from './core/core.module';
+import { AppModule } from './app.module.ts';
 
 (async () => {
-  const app = await NestFactory.createApplicationContext(CoreModule, {
-    logger: false // no logger
+  const app = await NestFactory.createApplicationContext(AppModule, {
+    logger: false
   });
   app
     .select(CommandModule)
