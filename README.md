@@ -10,6 +10,7 @@
 
 ## Dependency
 
+- Use version `2.*` for nestjs `6.*`, `7.*`, yargs `11.*`, `12.*`, `13.*`, `14.*`, `15.*`
 - Use version `1.*` for nestjs `6.*`, `7.*`
 - Use version `0.*` for nestjs `5.*`
 
