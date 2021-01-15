@@ -11,7 +11,7 @@ import {
   CommandParamTypes,
   CommandParamMetadata,
   CommandOptionsOption,
-  CommnadPositionalOption,
+  CommandPositionalOption,
   CommandParamMetadataItem
 } from './command.decorator';
 import { CommandService } from './command.service';
@@ -111,7 +111,7 @@ export class CommandExplorerService {
 
   private generateCommandHandlerParams(
     params: CommandParamMetadata<
-      CommandOptionsOption | CommnadPositionalOption
+      CommandOptionsOption | CommandPositionalOption
     >,
     argv: Arguments
   ) {
@@ -125,7 +125,7 @@ export class CommandExplorerService {
 
         case CommandParamTypes.POSITIONAL:
           list[item.index] =
-            argv[(item.option as CommnadPositionalOption).name];
+            argv[(item.option as CommandPositionalOption).name];
           break;
 
         case CommandParamTypes.ARGV:
@@ -141,7 +141,7 @@ export class CommandExplorerService {
 
   private generateCommandBuilder(
     params: CommandParamMetadata<
-      CommandOptionsOption | CommnadPositionalOption
+      CommandOptionsOption | CommandPositionalOption
     >,
     yargs: Argv
   ) {
@@ -156,8 +156,8 @@ export class CommandExplorerService {
 
         case CommandParamTypes.POSITIONAL:
           yargs.positional(
-            (item.option as CommnadPositionalOption).name,
-            item.option as CommnadPositionalOption
+            (item.option as CommandPositionalOption).name,
+            item.option as CommandPositionalOption
           );
           break;
 
