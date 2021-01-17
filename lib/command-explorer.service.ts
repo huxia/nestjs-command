@@ -1,17 +1,17 @@
 import compact from 'lodash.compact';
 import flattenDeep from 'lodash.flattendeep';
-import { CommandModule, Argv } from 'yargs';
+import { CommandModule, Argv, Arguments } from 'yargs';
 import { Injectable } from '@nestjs/common';
 import { MetadataScanner } from '@nestjs/core/metadata-scanner';
 import { ModulesContainer } from '@nestjs/core/injector/modules-container';
-import { Injectable as InjectableInterface } from '@nestjs/common/interfaces';
+import { Injectable as IInjectable } from '@nestjs/common/interfaces';
 import {
   COMMAND_HANDLER_METADATA,
   CommandMetadata,
   CommandParamTypes,
   CommandParamMetadata,
   CommandOptionsOption,
-  CommnadPositionalOption,
+  CommandPositionalOption,
   CommandParamMetadataItem
 } from './command.decorator';
 import { CommandService } from './command.service';
@@ -40,7 +40,7 @@ export class CommandExplorerService {
     );
   }
 
-  protected filterCommands(instance: InjectableInterface, metatype: any) {
+  protected filterCommands(instance: IInjectable, metatype: any) {
     if (!instance) return;
 
     const prototype = Object.getPrototypeOf(instance);
@@ -54,14 +54,14 @@ export class CommandExplorerService {
       .filter(command => !!command.metadata)
       .map<CommandModule>(command => {
         const exec = instance[command.methodName].bind(instance);
-        const builder = (yargs: Argv) => {
-          return this.generateCommandBuilder(command.metadata.params, yargs);
-        }; // EOF builder
 
-        const handler = async (argv: any) => {
+        const builder: NonNullable<CommandModule['builder']> = (yargs) =>
+          this.generateCommandBuilder(command.metadata.params, yargs);
+
+        const handler: NonNullable<CommandModule['handler']> = async (args) => {
           const params = this.generateCommandHandlerParams(
             command.metadata.params,
-            argv
+            args
           );
 
           this.commandService.run();
@@ -111,9 +111,9 @@ export class CommandExplorerService {
 
   private generateCommandHandlerParams(
     params: CommandParamMetadata<
-      CommandOptionsOption | CommnadPositionalOption
+      CommandOptionsOption | CommandPositionalOption
     >,
-    argv: any
+    argv: Arguments
   ) {
     const list = [];
 
@@ -125,7 +125,7 @@ export class CommandExplorerService {
 
         case CommandParamTypes.POSITIONAL:
           list[item.index] =
-            argv[(item.option as CommnadPositionalOption).name];
+            argv[(item.option as CommandPositionalOption).name];
           break;
 
         case CommandParamTypes.ARGV:
@@ -141,7 +141,7 @@ export class CommandExplorerService {
 
   private generateCommandBuilder(
     params: CommandParamMetadata<
-      CommandOptionsOption | CommnadPositionalOption
+      CommandOptionsOption | CommandPositionalOption
     >,
     yargs: Argv
   ) {
@@ -156,8 +156,8 @@ export class CommandExplorerService {
 
         case CommandParamTypes.POSITIONAL:
           yargs.positional(
-            (item.option as CommnadPositionalOption).name,
-            item.option as CommnadPositionalOption
+            (item.option as CommandPositionalOption).name,
+            item.option as CommandPositionalOption
           );
           break;
 

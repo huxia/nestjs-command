@@ -1,6 +1,6 @@
 {
   "name": "nestjs-command",
-  "version": "1.5.2",
+  "version": "2.0.0",
   "description": "nest.js command tool",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,12 +11,12 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "format": "prettier lib/**/*.ts --write"
+    "format": "prettier lib/**/*.ts --write",
+    "test:yargs-version": "esno ./scripts/check-yargs-version.ts"
   },
   "dependencies": {
     "lodash.compact": "^3.0.1",
-    "lodash.flattendeep": "^4.4.0",
-    "yargs": "^12.0.1"
+    "lodash.flattendeep": "^4.4.0"
   },
   "bin": {
     "nestjs-command": "./bin/cli"
@@ -27,15 +27,19 @@
     "@types/lodash.compact": "^3.0.6",
     "@types/lodash.flattendeep": "^4.4.6",
     "@types/node": "^10.3.5",
-    "@types/yargs": "^11.1.1",
+    "@types/yargs": "^15.0.12",
+    "esno": "^0.4.0",
+    "execa": "^5.0.0",
     "prettier": "^1.14.2",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^3.0.2",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.5",
+    "yarn-add-no-save": "^1.0.3"
   },
   "peerDependencies": {
     "@nestjs/common": "^6.0.0 || ^7.0.0",
-    "@nestjs/core": "^6.0.0 || ^7.0.0"
+    "@nestjs/core": "^6.0.0 || ^7.0.0",
+    "yargs": "^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0"
   },
   "repository": {
     "type": "git",
@@ -44,6 +48,7 @@
   "keywords": [
     "nestjs",
     "command",
-    "cli"
+    "cli",
+    "yargs"
   ]
 }

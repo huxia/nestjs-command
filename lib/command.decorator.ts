@@ -33,7 +33,7 @@ const createCommandParamDecorator = <O>(paramtype: CommandParamTypes) => {
 };
 
 export interface CommandMetadata {
-  params: CommandParamMetadata<CommnadPositionalOption | CommandOptionsOption>;
+  params: CommandParamMetadata<CommandPositionalOption | CommandOptionsOption>;
   option: CommandOption;
 }
 export interface CommandOption {
@@ -60,10 +60,10 @@ export function Command(option: CommandOption): MethodDecorator {
     SetMetadata(COMMAND_HANDLER_METADATA, metadata)(target, key, descriptor);
   };
 }
-export interface CommnadPositionalOption extends PositionalOptions {
+export interface CommandPositionalOption extends PositionalOptions {
   name: string;
 }
-export const Positional = createCommandParamDecorator<CommnadPositionalOption>(
+export const Positional = createCommandParamDecorator<CommandPositionalOption>(
   CommandParamTypes.POSITIONAL
 );
 

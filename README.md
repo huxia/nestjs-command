@@ -10,13 +10,14 @@
 
 ## Dependency
 
+- Use version `2.*` for nestjs `6.*`, `7.*`, yargs `11.*`, `12.*`, `13.*`, `14.*`, `15.*`
 - Use version `1.*` for nestjs `6.*`, `7.*`
 - Use version `0.*` for nestjs `5.*`
 
 ## Installation
 
 ```bash
-$ npm install --save nestjs-command
+$ npm install --save nestjs-command yargs
 
 # if you use typescript
 $ npm install --save-dev @types/yargs
@@ -40,7 +41,7 @@ Create a Cli entrypoint: `./src/cli.ts`
 
 ```typescript
 import { NestFactory } from '@nestjs/core';
-import { CommandModule, CommandService } from 'nestjs-command';
+import { CommandModule, CommandService } from 'nestjs-command';
 import { AppModule } from './app.module.ts';
 
 (async () => {
