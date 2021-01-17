@@ -12,14 +12,16 @@ cache:
 install_dependencies:
   stage: build
   only:
-    - tags
+    # - tags
+    - master
   script:
     - yarn install
 
 publish_package:
   stage: deploy
   only:
-    - tags
+    # - tags
+    - master
   script:
     - npm config set registry https://registry.npmjs.org/
     - npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
