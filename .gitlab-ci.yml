@@ -22,8 +22,8 @@ publish_package:
     - tags
   before_script:
     - npm config set registry https://registry.npmjs.org/
-    - npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
-    - npm login
+    - npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+    - npm whoami
   script:
     - yarn build
     - npm publish --verbose
