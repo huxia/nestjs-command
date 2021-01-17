@@ -25,7 +25,7 @@ publish_package:
   script:
     - npm config set registry https://registry.npmjs.org/
     - npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
-    - [[ -z "${NPM_TOKEN}" ]] && exit 1 || echo 'ya'
+    - '[[ -z "${NPM_TOKEN}" ]] && exit 1 || echo "ya"'
     - npm whoami
     - yarn build
     - npm publish --verbose
