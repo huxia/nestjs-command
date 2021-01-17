@@ -12,7 +12,7 @@ cache:
 install_dependencies:
   stage: build
   only:
-    # - tags
+    - tags
     - master
   script:
     - yarn install
@@ -20,12 +20,11 @@ install_dependencies:
 publish_package:
   stage: deploy
   only:
-    # - tags
+    - tags
     - master
   script:
     - npm config set registry https://registry.npmjs.org/
     - npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
-    - '[[ -z "${NPM_TOKEN}" ]] && exit 1 || echo "ya"'
     - npm whoami
     - yarn build
     - npm publish --verbose
