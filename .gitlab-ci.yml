@@ -20,11 +20,10 @@ publish_package:
   stage: deploy
   only:
     - tags
-  before_script:
+  script:
     - npm config set registry https://registry.npmjs.org/
     - npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
     - npm whoami
-  script:
     - yarn build
     - npm publish --verbose
   artifacts:
