@@ -19,7 +19,7 @@ export class CommandService {
       .strict();
 
     metadatas.forEach(command => {
-      yargs.command(command);
+      yargs.command(command).fail(false);
     });
   }
 
